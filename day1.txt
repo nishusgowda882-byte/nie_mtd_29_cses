@@ -1,0 +1,59 @@
+Collections
+    tickets: title, description, category, status #, assigned_to, resolved_by
+    users: username, password, role
+
+Task
+    Customer Lacchi raising the complaint to the
+    E-Commerce Support Team "Wrong item received".
+
+    team leader Manasa assigns the ticket raised by Lacchu
+    to Support Agent Kusuma.
+
+    Admin Nishu will create Lacchi, Manasa,
+    and Kusuma users.
+
+Solution
+
+1. Create mongo database 'ecommerce_support_db'
+
+   use ecommerce_support_db
+
+2. Add four users Nishu, Lacchu, Manasa, and Kusuma
+
+   db.users.insertMany([
+       {username: "Nishu", password: "nishu123", role: "admin"},
+       {username: "Lacchu", password: "lacchu123", role: "customer"},
+       {username: "Manasa", password: "manasa123", role: "team_lead"},
+       {username: "Kusuma", password: "kusuma123", role: "support_agent"}
+   ])
+
+   db.users.find()
+
+3. Lacchu will create the ticket
+
+   db.tickets.insertOne({
+       title: "Wrong item received",
+       description: "I received the wrong item",
+       category: "Product",
+       status: "NEW"
+   })
+
+   db.tickets.find()
+
+4. Manasa assigns the ticket to Kusuma
+
+   db.tickets.updateOne(
+       {_id: ObjectId("????")},
+       {$set: {status: "ASSIGNED", assigned_to: "Kusuma"}}
+   )
+
+   db.tickets.find()
+
+5. Kusuma will update the issue resolution status
+
+   db.tickets.updateOne(
+       {_id: ObjectId("????")},
+       {$set: {status: "RESOLVED", resolved_by: "Kusuma"}}
+   )
+
+   db.tickets.find()
